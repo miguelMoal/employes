@@ -9,6 +9,9 @@ import { ModalEmploye } from "../../components";
 //Externals
 import styled from "styled-components";
 
+//Globals
+import { useStore } from "../../context";
+
 const MainContainer = styled.div`
   width: 350px;
   height: 550px;
@@ -19,10 +22,12 @@ const MainContainer = styled.div`
 `;
 
 const Container = () => {
+  const { showModal } = useStore();
+
   return (
     <MainContainer>
       <ListEmployes />
-      <ModalEmploye />
+      {showModal && <ModalEmploye />}
     </MainContainer>
   );
 };

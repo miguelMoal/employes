@@ -22,6 +22,8 @@ function App() {
         secondary: "#242424",
         border: "#ffffff",
         text: "#FFFFFF",
+        modal: "#ffffff",
+        textModal: "#242424",
       },
     },
     light: {
@@ -30,6 +32,8 @@ function App() {
         secondary: "#F3F3F3",
         border: "#242424",
         text: "#1A1A1A",
+        modal: "#000000",
+        textModal: "#F3F3F3",
       },
     },
   };

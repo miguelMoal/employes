@@ -5,14 +5,15 @@ import Context from "./Context";
 const State = ({ children }) => {
   const initialState = {
     loading: false,
+    showModal: true,
   };
 
   const [state, dispatch] = useReducer(Reducer, initialState);
 
-  const setIsLoading = (data) => {
+  const setModal = (show) => {
     dispatch({
       type: "SET_MODAL",
-      payload: data,
+      payload: show,
     });
   };
 
@@ -20,9 +21,10 @@ const State = ({ children }) => {
     <Context.Provider
       value={{
         loading: state.loading,
+        showModal: state.showModal,
         uses: [state, dispatch],
 
-        setIsLoading,
+        setModal,
       }}
     >
       {children}
@@ -34,8 +36,8 @@ const useProvider = () => useContext(Context);
 const useDispatch = () => useProvider()?.uses[1];
 const useStore = () => useProvider()?.uses[0];
 
-const useSetIsLoading = () => useProvider()?.setIsLoading;
+const useSetModal = () => useProvider()?.setModal;
 
-export { useStore, useDispatch, useSetIsLoading };
+export { useStore, useDispatch, useSetModal };
 
 export default State;
