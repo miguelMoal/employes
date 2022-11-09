@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+//Components
+import { Layout, Container } from "./components";
+
+//Hooks
+import { useToogleTheme } from "./hooks";
+
+import "./App.css";
+
+//Externals
+import { ThemeProvider } from "styled-components";
 
 function App() {
+  const [theme, toggleTheme] = useToogleTheme();
+
+  const themes = {
+    dark: {
+      color: {
+        primary: "#0F0F0F",
+        secondary: "#242424",
+        border: "#ffffff",
+        text: "#FFFFFF",
+      },
+    },
+    light: {
+      color: {
+        primary: "#FFFFFF",
+        secondary: "#F3F3F3",
+        border: "#242424",
+        text: "#1A1A1A",
+      },
+    },
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={themes[theme]}>
+      <div onClick={toggleTheme}>change theme</div>
+      <Layout>
+        <Container />
+      </Layout>
+    </ThemeProvider>
   );
 }
 
