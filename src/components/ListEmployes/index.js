@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 //Components
-import { Employe } from "../../components";
+import { Employe } from "..";
 
 //Connections
 import { createEmploye } from "../../conections";

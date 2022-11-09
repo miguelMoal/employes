@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 //Components
-import { Text } from "../../components";
+import { Text } from "..";
 
 const CardContainer = styled.div`
   display: flex;

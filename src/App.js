@@ -1,3 +1,6 @@
+//Globals
+import State from "./context";
+
 //Components
 import { Layout, Container } from "./components";
 
@@ -32,12 +35,14 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={themes[theme]}>
-      <div onClick={toggleTheme}>change theme</div>
-      <Layout>
-        <Container />
-      </Layout>
-    </ThemeProvider>
+    <State>
+      <ThemeProvider theme={themes[theme]}>
+        <div onClick={toggleTheme}>change theme</div>
+        <Layout>
+          <Container />
+        </Layout>
+      </ThemeProvider>
+    </State>
   );
 }
 
