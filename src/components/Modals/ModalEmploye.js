@@ -10,7 +10,7 @@ import { CustomInput, CustomButton } from "../../components";
 import { useSetModal } from "../../context";
 
 //Connections
-import { createEmploye, fileUpload } from "../../conections";
+import { createEmploye } from "../../conections";
 
 const ModalContainer = styled.div`
   position: absolute;
@@ -28,7 +28,7 @@ const FormContainer = styled.div`
   background-color: ${({ theme }) => theme.color.modal};
   color: ${({ theme }) => theme.color.textModal};
   width: 80%;
-  height: 260px;
+  height: 340px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -40,15 +40,34 @@ const ButtonsContainer = styled.div`
   margin-top: 20px;
 `;
 
+const FileContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+`;
+
+const LabelFile = styled.p`
+  margin: 0px;
+  color: ${({ theme }) => theme.color.textModal};
+`;
+
+const TextDanger = styled.p`
+  margin: 0px;
+  color: tomato;
+`;
+
 const ModalEmploye = () => {
   const setModal = useSetModal();
 
+  const [textAlert, setTextAlert] = useState(null);
   const [values, setValues] = useState({
-    name: "a",
-    email: "a",
-    phone: "s",
+    name: "",
+    email: "",
+    phone: "",
   });
-  const [file, setFile] = useState({});
+
+  const formData = new FormData();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -59,13 +78,20 @@ const ModalEmploye = () => {
   };
 
   const createEmployes = () => {
-    createEmploye(values.name, values.email, values.phone, file)
-      .then((result) => {
-        console.log("result", result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (values.name == "" || values.email == "" || values.phone == "") {
+      setTextAlert("Todos los campos son requeridos");
+      return;
+    }
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("phone", values.phone);
+    createEmploye(formData).then((res) => {
+      if (res.ok) {
+        console.log("todo bien");
+        return;
+      }
+      setTextAlert(res.msg);
+    });
   };
 
   const cancel = () => {
@@ -75,29 +101,36 @@ const ModalEmploye = () => {
   const handleFile = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const formData = new FormData();
       formData.append("file", file);
-      formData.append("name", "name");
-      formData.append("email", "email");
-      formData.append("phone", "´hone");
-      fileUpload(formData).then((res) => {
-        console.log(res);
-      });
     }
   };
 
   return (
     <ModalContainer>
       <FormContainer>
-        <input type="file" onChange={handleFile} />
+        {textAlert && <TextDanger>{textAlert}</TextDanger>}
+        <FileContainer>
+          <LabelFile>Sube una imagen</LabelFile>
+          <input type="file" onChange={handleFile} placeholder="sad" />
+        </FileContainer>
         <CustomInput
           label="Nombre"
           name="name"
           value={values.name}
           onChange={handleChange}
         />
-        <CustomInput label="Correo" name="email" onChange={handleChange} />
-        <CustomInput label="Teléfono" name="phone" onChange={handleChange} />
+        <CustomInput
+          label="Correo"
+          name="email"
+          onChange={handleChange}
+          value={values.email}
+        />
+        <CustomInput
+          label="Teléfono"
+          name="phone"
+          onChange={handleChange}
+          value={values.phone}
+        />
         <ButtonsContainer>
           <CustomButton
             text="Cancelar"
