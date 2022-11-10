@@ -171,7 +171,7 @@ const ModalEmploye = () => {
         {showModal.type == "add" && (
           <FileContainer>
             <LabelFile>Sube una imagen</LabelFile>
-            <input type="file" onChange={handleFile} placeholder="sad" />
+            <input type="file" onChange={handleFile} accept=".jpg, .png" />
           </FileContainer>
         )}
         <CustomInput
