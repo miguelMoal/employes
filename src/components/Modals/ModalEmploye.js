@@ -72,6 +72,7 @@ const ModalEmploye = () => {
   const { showModal } = useStore();
 
   const [textAlert, setTextAlert] = useState(null);
+  const [file, setFile] = useState(null);
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -89,12 +90,16 @@ const ModalEmploye = () => {
   };
 
   const createEmployes = () => {
-    if (validateFields()) {
-      if (showModal.type == "add") {
-        create();
-      } else {
-        update();
+    if (validateImage()) {
+      if (validateFields()) {
+        if (showModal.type == "add") {
+          create();
+        } else {
+          update();
+        }
       }
+    } else {
+      setTextAlert("Debe seleccionar una image");
     }
   };
 
@@ -115,6 +120,7 @@ const ModalEmploye = () => {
 
   const create = () => {
     setLoading(true);
+    formData.append("file", file);
     formData.append("name", values.name);
     formData.append("email", values.email);
     formData.append("phone", values.phone);
@@ -123,11 +129,19 @@ const ModalEmploye = () => {
         if (res.ok) {
           addEmploye(res.msg);
           setModal({ show: false, type: "", id: "" });
+          setFile(null);
           return;
         }
         setTextAlert(res.msg);
       })
       .finally(() => setLoading(false));
+  };
+
+  const validateImage = () => {
+    if (file) {
+      return true;
+    }
+    return false;
   };
 
   const validateFields = () => {
@@ -139,13 +153,14 @@ const ModalEmploye = () => {
   };
 
   const cancel = () => {
-    setModal({ show: false, type: "udate", id: "" });
+    setModal({ show: false, type: "", id: "" });
+    setFile(null);
   };
 
   const handleFile = (e) => {
     const file = e.target.files[0];
     if (file) {
-      formData.append("file", file);
+      setFile(file);
     }
   };
 
