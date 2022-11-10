@@ -102,13 +102,6 @@ const _Fetch = (baseURL = "https://employes-test.herokuapp.com/api/") => {
           .catch((error) => reject(error));
       });
     },
-    getOpen: (url, method) => {
-      return new Promise((resolve, reject) => {
-        fetchPolyfill(url, { method })
-          .then((response) => responseStatus(response, resolve, reject))
-          .catch((error) => reject(error));
-      });
-    },
   };
 };
 
