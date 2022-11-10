@@ -1,4 +1,13 @@
-import { SET_MODAL, SET_LOADING, SET_EMPLOYES, ADD_EMPLOYE } from "./actions";
+import {
+  SET_MODAL,
+  SET_LOADING,
+  SET_EMPLOYES,
+  ADD_EMPLOYE,
+  DELETE_EMPLOYE,
+} from "./actions";
+
+//helpers reducer
+import { deleteEmploye } from "./helpersReducer";
 
 const Reducer = (state, action) => {
   const { payload, type } = action;
@@ -23,6 +32,11 @@ const Reducer = (state, action) => {
       return {
         ...state,
         employes: [...state.employes, payload],
+      };
+    case DELETE_EMPLOYE:
+      return {
+        ...state,
+        employes: deleteEmploye(payload, state.employes),
       };
   }
 };

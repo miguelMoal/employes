@@ -27,7 +27,7 @@ const Container = () => {
   return (
     <MainContainer>
       <ListEmployes />
-      {showModal && <ModalEmploye />}
+      {showModal.show && <ModalEmploye />}
     </MainContainer>
   );
 };

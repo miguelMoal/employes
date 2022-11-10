@@ -7,7 +7,12 @@ import styled from "styled-components";
 import { CustomInput, CustomButton } from "../../components";
 
 //Globasl
-import { useSetModal, useSetLoading, useAddEmploye } from "../../context";
+import {
+  useSetModal,
+  useSetLoading,
+  useAddEmploye,
+  useStore,
+} from "../../context";
 
 //Connections
 import { createEmploye } from "../../conections";
@@ -28,7 +33,7 @@ const FormContainer = styled.div`
   background-color: ${({ theme }) => theme.color.modal};
   color: ${({ theme }) => theme.color.textModal};
   width: 80%;
-  height: 340px;
+  height: ${({ type }) => (type == "add" ? "340px" : "280")};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -62,6 +67,8 @@ const ModalEmploye = () => {
   const setLoading = useSetLoading();
   const addEmploye = useAddEmploye();
 
+  const { showModal } = useStore();
+
   const [textAlert, setTextAlert] = useState(null);
   const [values, setValues] = useState({
     name: "",
@@ -80,10 +87,16 @@ const ModalEmploye = () => {
   };
 
   const createEmployes = () => {
-    if (values.name == "" || values.email == "" || values.phone == "") {
-      setTextAlert("Todos los campos son requeridos");
-      return;
+    if (validateFields()) {
+      if (showModal.type == "add") {
+        create();
+      } else {
+        console.log("udater");
+      }
     }
+  };
+
+  const create = () => {
     setLoading(true);
     formData.append("name", values.name);
     formData.append("email", values.email);
@@ -100,6 +113,14 @@ const ModalEmploye = () => {
       .finally(() => setLoading(false));
   };
 
+  const validateFields = () => {
+    if (values.name == "" || values.email == "" || values.phone == "") {
+      setTextAlert("Todos los campos son requeridos");
+      return false;
+    }
+    return true;
+  };
+
   const cancel = () => {
     setModal(false);
   };
@@ -113,12 +134,14 @@ const ModalEmploye = () => {
 
   return (
     <ModalContainer>
-      <FormContainer>
+      <FormContainer type={showModal.type}>
         {textAlert && <TextDanger>{textAlert}</TextDanger>}
-        <FileContainer>
-          <LabelFile>Sube una imagen</LabelFile>
-          <input type="file" onChange={handleFile} placeholder="sad" />
-        </FileContainer>
+        {showModal.type == "add" && (
+          <FileContainer>
+            <LabelFile>Sube una imagen</LabelFile>
+            <input type="file" onChange={handleFile} placeholder="sad" />
+          </FileContainer>
+        )}
         <CustomInput
           label="Nombre"
           name="name"

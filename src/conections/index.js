@@ -8,6 +8,11 @@ export const getEmployes = async () => {
   return response;
 };
 
+export const deleteEmploye = async (id) => {
+  const response = await _fetch.delete(`employes/?id=${id}`);
+  return response;
+};
+
 export const createEmploye = async (file) => {
   try {
     const resp = await fetch(process.env.REACT_APP_API_URL + "api/employes/", {

@@ -28,7 +28,7 @@ const BtnAddEmploye = () => {
   const setModal = useSetModal();
 
   return (
-    <Container onClick={() => setModal(true)}>
+    <Container onClick={() => setModal({ show: true, type: "add" })}>
       <Plus>+</Plus>
     </Container>
   );

@@ -4,6 +4,12 @@ import styled from "styled-components";
 //Components
 import { Text } from "..";
 
+//Connections
+import { deleteEmploye } from "../../conections/";
+
+//Globasl
+import { useDeleteEmploye, useSetModal } from "../../context";
+
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,15 +32,40 @@ const ButtonsContainer = styled.div`
 `;
 
 const Employe = ({ data }) => {
+  const deleteEmployeList = useDeleteEmploye();
+  const setModal = useSetModal();
+
+  const deleteEmp = () => {
+    deleteEmploye(data._id).then((result) => {
+      if (result.ok) {
+        deleteEmployeList(result.msg);
+      }
+    });
+  };
+
+  const updateEmp = () => {
+    setModal({
+      show: true,
+      type: "update",
+    });
+  };
+
   return (
     <CardContainer>
       <ButtonsContainer>
-        <img src="./edit.png" width="35px" height="35px" />
         <img
+          src="./edit.png"
+          width="35px"
+          height="35px"
+          onClick={updateEmp}
+          style={{ cursor: "pointer" }}
+        />
+        <img
+          onClick={deleteEmp}
           src="./remove.png"
           width="32px"
           height="32px"
-          style={{ marginLeft: "10px" }}
+          style={{ marginLeft: "10px", cursor: "pointer" }}
         />
       </ButtonsContainer>
       <div>

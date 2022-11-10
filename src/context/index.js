@@ -5,7 +5,10 @@ import Context from "./Context";
 const State = ({ children }) => {
   const initialState = {
     loading: false,
-    showModal: false,
+    showModal: {
+      show: false,
+      type: "",
+    },
     employes: [],
   };
 
@@ -39,6 +42,13 @@ const State = ({ children }) => {
     });
   };
 
+  const deleteEmploye = (id) => {
+    dispatch({
+      type: "DELETE_EMPLOYE",
+      payload: id,
+    });
+  };
+
   return (
     <Context.Provider
       value={{
@@ -51,6 +61,7 @@ const State = ({ children }) => {
         setLoading,
         setEmployes,
         addEmploye,
+        deleteEmploye,
       }}
     >
       {children}
@@ -66,6 +77,7 @@ const useSetModal = () => useProvider()?.setModal;
 const useSetLoading = () => useProvider()?.setLoading;
 const useSetEmployes = () => useProvider()?.setEmployes;
 const useAddEmploye = () => useProvider()?.addEmploye;
+const useDeleteEmploye = () => useProvider()?.deleteEmploye;
 
 export {
   useStore,
@@ -74,6 +86,7 @@ export {
   useSetLoading,
   useSetEmployes,
   useAddEmploye,
+  useDeleteEmploye,
 };
 
 export default State;
