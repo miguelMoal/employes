@@ -4,10 +4,11 @@ import {
   SET_EMPLOYES,
   ADD_EMPLOYE,
   DELETE_EMPLOYE,
+  UPDATE_EMPLOYE,
 } from "./actions";
 
 //helpers reducer
-import { deleteEmploye } from "./helpersReducer";
+import { deleteEmploye, updateEmploye } from "./helpersReducer";
 
 const Reducer = (state, action) => {
   const { payload, type } = action;
@@ -37,6 +38,11 @@ const Reducer = (state, action) => {
       return {
         ...state,
         employes: deleteEmploye(payload, state.employes),
+      };
+    case UPDATE_EMPLOYE:
+      return {
+        ...state,
+        employes: updateEmploye(payload, state.employes),
       };
   }
 };

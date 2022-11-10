@@ -8,7 +8,7 @@ import { Text } from "..";
 import { deleteEmploye } from "../../conections/";
 
 //Globasl
-import { useDeleteEmploye, useSetModal } from "../../context";
+import { useDeleteEmploye, useSetModal, useSetLoading } from "../../context";
 
 const CardContainer = styled.div`
   display: flex;
@@ -34,19 +34,24 @@ const ButtonsContainer = styled.div`
 const Employe = ({ data }) => {
   const deleteEmployeList = useDeleteEmploye();
   const setModal = useSetModal();
+  const setLoading = useSetLoading();
 
   const deleteEmp = () => {
-    deleteEmploye(data._id).then((result) => {
-      if (result.ok) {
-        deleteEmployeList(result.msg);
-      }
-    });
+    setLoading(true);
+    deleteEmploye(data._id)
+      .then((result) => {
+        if (result.ok) {
+          deleteEmployeList(result.msg);
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   const updateEmp = () => {
     setModal({
       show: true,
       type: "update",
+      id: data._id,
     });
   };
 

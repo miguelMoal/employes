@@ -8,6 +8,7 @@ const State = ({ children }) => {
     showModal: {
       show: false,
       type: "",
+      id: "",
     },
     employes: [],
   };
@@ -49,6 +50,13 @@ const State = ({ children }) => {
     });
   };
 
+  const updateEmploye = (data) => {
+    dispatch({
+      type: "UPDATE_EMPLOYE",
+      payload: data,
+    });
+  };
+
   return (
     <Context.Provider
       value={{
@@ -62,6 +70,7 @@ const State = ({ children }) => {
         setEmployes,
         addEmploye,
         deleteEmploye,
+        updateEmploye,
       }}
     >
       {children}
@@ -78,6 +87,7 @@ const useSetLoading = () => useProvider()?.setLoading;
 const useSetEmployes = () => useProvider()?.setEmployes;
 const useAddEmploye = () => useProvider()?.addEmploye;
 const useDeleteEmploye = () => useProvider()?.deleteEmploye;
+const useUpdateEmploye = () => useProvider()?.updateEmploye;
 
 export {
   useStore,
@@ -87,6 +97,7 @@ export {
   useSetEmployes,
   useAddEmploye,
   useDeleteEmploye,
+  useUpdateEmploye,
 };
 
 export default State;

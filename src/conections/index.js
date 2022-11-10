@@ -13,6 +13,15 @@ export const deleteEmploye = async (id) => {
   return response;
 };
 
+export const updateEmploye = async (id, email, name, phone) => {
+  const response = await _fetch.update(`employes/?id=${id}`, {
+    email,
+    name,
+    phone,
+  });
+  return response;
+};
+
 export const createEmploye = async (file) => {
   try {
     const resp = await fetch(process.env.REACT_APP_API_URL + "api/employes/", {

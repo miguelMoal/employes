@@ -12,10 +12,11 @@ import {
   useSetLoading,
   useAddEmploye,
   useStore,
+  useUpdateEmploye,
 } from "../../context";
 
 //Connections
-import { createEmploye } from "../../conections";
+import { createEmploye, updateEmploye } from "../../conections";
 
 const ModalContainer = styled.div`
   position: absolute;
@@ -66,6 +67,7 @@ const ModalEmploye = () => {
   const setModal = useSetModal();
   const setLoading = useSetLoading();
   const addEmploye = useAddEmploye();
+  const updateEmployeList = useUpdateEmploye();
 
   const { showModal } = useStore();
 
@@ -91,9 +93,24 @@ const ModalEmploye = () => {
       if (showModal.type == "add") {
         create();
       } else {
-        console.log("udater");
+        update();
       }
     }
+  };
+
+  const update = () => {
+    setLoading(true);
+    updateEmploye(showModal.id, values.email, values.name, values.phone)
+      .then((result) => {
+        updateEmployeList({
+          id: showModal.id,
+          name: values.name,
+          phone: values.phone,
+          email: values.email,
+        });
+        setModal({ show: false, type: "", id: "" });
+      })
+      .finally(() => setLoading(false));
   };
 
   const create = () => {
@@ -105,7 +122,7 @@ const ModalEmploye = () => {
       .then((res) => {
         if (res.ok) {
           addEmploye(res.msg);
-          setModal(false);
+          setModal({ show: false, type: "", id: "" });
           return;
         }
         setTextAlert(res.msg);
@@ -122,7 +139,7 @@ const ModalEmploye = () => {
   };
 
   const cancel = () => {
-    setModal(false);
+    setModal({ show: false, type: "udate", id: "" });
   };
 
   const handleFile = (e) => {
@@ -167,7 +184,7 @@ const ModalEmploye = () => {
             action={() => cancel()}
           />
           <CustomButton
-            text="Crear"
+            text={showModal.type == "add" ? "Crear" : "Actualizar"}
             color="#009DF8"
             ml={"10px"}
             action={() => createEmployes()}
