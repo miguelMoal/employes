@@ -24,10 +24,13 @@ export const updateEmploye = async (id, email, name, phone) => {
 
 export const createEmploye = async (file) => {
   try {
-    const resp = await fetch(process.env.REACT_APP_API_URL + "api/employes/", {
-      method: "POST",
-      body: file,
-    });
+    const resp = await fetch(
+      "https://employes-test.herokuapp.com/api/employes/",
+      {
+        method: "POST",
+        body: file,
+      }
+    );
     const data = await resp.json();
     return data;
   } catch (error) {

@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-const _Fetch = (baseURL = process.env.REACT_APP_API_URL + "api/") => {
+const _Fetch = (baseURL = "https://employes-test.herokuapp.com/api/") => {
   const headerJson = {
     Accept: "application/json",
     "Content-type": "application/json",

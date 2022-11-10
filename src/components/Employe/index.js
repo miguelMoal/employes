@@ -77,7 +77,7 @@ const Employe = ({ data }) => {
         <div>
           <img
             style={{ height: "70px", width: "70px", borderRadius: "100%" }}
-            src={`${process.env.REACT_APP_API_URL}uploads/${data.image}`}
+            src={`https://employes-test.herokuapp.com/uploads/${data.image}`}
           />
         </div>
         <InfoContainer>
