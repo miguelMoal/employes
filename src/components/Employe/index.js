@@ -9,8 +9,8 @@ const CardContainer = styled.div`
   flex-direction: column;
   border: ${({ theme }) => `solid 1px ${theme.color.border}`};
   border-radius: 10px;
-  width: 100%;
   padding: 10px;
+  margin-bottom: 25px;
 `;
 
 const InfoContainer = styled.div`
@@ -25,7 +25,7 @@ const ButtonsContainer = styled.div`
   justify-content: flex-end;
 `;
 
-const Employe = () => {
+const Employe = ({ data }) => {
   return (
     <CardContainer>
       <ButtonsContainer>
@@ -41,13 +41,13 @@ const Employe = () => {
         <div>
           <img
             style={{ height: "70px", width: "70px", borderRadius: "100%" }}
-            src="https://thumbs.dreamstime.com/b/businessman-icon-vector-male-avatar-profile-image-profile-businessman-icon-vector-male-avatar-profile-image-182095609.jpg"
+            src={`${process.env.REACT_APP_API_URL}uploads/${data.image}`}
           />
         </div>
         <InfoContainer>
-          <Text>Nombre: </Text>
-          <Text>Telefono:</Text>
-          <Text>E-mail:</Text>
+          <Text>Nombre: {data.name}</Text>
+          <Text>Telefono: {data.phone}</Text>
+          <Text>E-mail: {data.email}</Text>
         </InfoContainer>
       </div>
     </CardContainer>

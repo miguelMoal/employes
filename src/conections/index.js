@@ -3,9 +3,14 @@ import Service from "../services/api";
 
 const _fetch = Service();
 
+export const getEmployes = async () => {
+  const response = await _fetch.get("employes");
+  return response;
+};
+
 export const createEmploye = async (file) => {
   try {
-    const resp = await fetch("http://localhost:8080/api/employes/", {
+    const resp = await fetch(process.env.REACT_APP_API_URL + "api/employes/", {
       method: "POST",
       body: file,
     });

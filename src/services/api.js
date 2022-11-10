@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-const _Fetch = (baseURL = "http://localhost:8080/api/") => {
+const _Fetch = (baseURL = process.env.REACT_APP_API_URL + "api/") => {
   const headerJson = {
     Accept: "application/json",
     "Content-type": "application/json",

@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { CustomInput, CustomButton } from "../../components";
 
 //Globasl
-import { useSetModal } from "../../context";
+import { useSetModal, useSetLoading, useAddEmploye } from "../../context";
 
 //Connections
 import { createEmploye } from "../../conections";
@@ -59,6 +59,8 @@ const TextDanger = styled.p`
 
 const ModalEmploye = () => {
   const setModal = useSetModal();
+  const setLoading = useSetLoading();
+  const addEmploye = useAddEmploye();
 
   const [textAlert, setTextAlert] = useState(null);
   const [values, setValues] = useState({
@@ -82,16 +84,20 @@ const ModalEmploye = () => {
       setTextAlert("Todos los campos son requeridos");
       return;
     }
+    setLoading(true);
     formData.append("name", values.name);
     formData.append("email", values.email);
     formData.append("phone", values.phone);
-    createEmploye(formData).then((res) => {
-      if (res.ok) {
-        console.log("todo bien");
-        return;
-      }
-      setTextAlert(res.msg);
-    });
+    createEmploye(formData)
+      .then((res) => {
+        if (res.ok) {
+          addEmploye(res.msg);
+          setModal(false);
+          return;
+        }
+        setTextAlert(res.msg);
+      })
+      .finally(() => setLoading(false));
   };
 
   const cancel = () => {
