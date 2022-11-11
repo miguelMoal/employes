@@ -90,16 +90,16 @@ const ModalEmploye = () => {
   };
 
   const createEmployes = () => {
-    if (validateImage()) {
-      if (validateFields()) {
-        if (showModal.type == "add") {
+    if (validateFields()) {
+      if (showModal.type == "add") {
+        if (validateImage()) {
           create();
         } else {
-          update();
+          setTextAlert("Debe seleccionar una image");
         }
+      } else {
+        update();
       }
-    } else {
-      setTextAlert("Debe seleccionar una image");
     }
   };
 

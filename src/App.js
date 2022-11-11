@@ -41,7 +41,9 @@ function App() {
   return (
     <State>
       <ThemeProvider theme={themes[theme]}>
-        <div onClick={toggleTheme}>change theme</div>
+        <div style={{ cursor: "pointer" }} onClick={toggleTheme}>
+          change theme
+        </div>
         <Layout>
           <Container />
         </Layout>
